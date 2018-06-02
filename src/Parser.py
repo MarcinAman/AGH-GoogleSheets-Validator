@@ -3,6 +3,10 @@ from oauth2client.service_account import ServiceAccountCredentials
 import json
 
 
+def decode_record(record):
+    return {k.encode('utf8'): v.encode('utf8') if type(v) == unicode else v for k, v in record.items()}
+
+
 class Parser:
     def __init__(self, file_name):
         self.file_name = file_name
@@ -17,7 +21,9 @@ class Parser:
         client = self.authorize()
         sheet = client.open(self.file_name).sheet1
 
-        return sheet.get_all_records()
+        records = sheet.get_all_records()
+
+        return [decode_record(x) for x in records]
 
     def xd(self):
         f = open('./tests/sample.json','w')

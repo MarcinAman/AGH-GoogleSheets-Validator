@@ -12,7 +12,7 @@ def main():
 
     parser = Parser.Parser(file_name)
 
-    print(parser.fetch_file())
+    fetched = parser.fetch_file()
 
 
 if __name__ == '__main__':
