@@ -1,10 +1,21 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
+import functools
 
 
 def decode_record(record):
     return {k.encode('utf8'): v.encode('utf8') if type(v) == unicode else v for k, v in record.items()}
+
+
+def contains_only_letters(value):
+    return value[1].isalpha()
+
+
+def is_record_empty(record):
+    return functools.reduce(
+        lambda acc, element: contains_only_letters(element) or acc, record.items(), False
+    )
 
 
 class Parser:
@@ -26,6 +37,6 @@ class Parser:
         return [decode_record(x) for x in records]
 
     def xd(self):
-        f = open('./tests/sample.json','w')
-        f.write('{ "content": '+json.dumps(self.fetch_file()[:20])+'}')
+        f = open('./tests/sample.json', 'w')
+        f.write('{ "content": ' + json.dumps(self.fetch_file()[:20]) + '}')
         f.close()

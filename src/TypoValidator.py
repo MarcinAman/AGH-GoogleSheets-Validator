@@ -10,3 +10,9 @@ class TypoValidator:
                 incorrect_objects.append(element)
 
         return incorrect_objects
+
+
+def validate(file,days):
+    validator = TypoValidator(file, days)
+
+    return validator.check_days()
