@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stylesheet Validator</title>
+
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    {%load static %}
+    <script src="{% static 'scripts/index.js' %}"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="main-bar">
+        <div class = "main-bar-content">
+            Google Stylesheets validator
+        </div>
+    </div>
+
+    <div class = 'main-table'>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                {% for column in columns %}
+                    <th>{{column}}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+             <tbody>
+            {% for inv_element in invalid %}
+            <tr class = "danger">
+                {% for column in columns %}
+                <td>
+                   {{inv_element|get_item:column}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+            {% for element in all_records %}
+            <tr class = "record">
+                {% for column in columns %}
+                    <td>
+                        {{element|get_item:column}}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer navbar-fixed-bottom refresh-container">
+        <button onclick="location.reload()">
+            {% load static %}
+            <img src="{% static 'files/64x64.png' %}">
+        </button>
+    </div>
+</body>
+</html>

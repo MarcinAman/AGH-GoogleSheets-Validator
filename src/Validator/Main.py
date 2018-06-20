@@ -1,5 +1,6 @@
 from src.Validator import Parser
 import json
+import os
 from src.Validator.TypoValidator import validate as validate_typo
 from src.Validator.TimeValidator import validate as validate_time
 from src.Validator.ObligatoryFieldsValidator import validate as validate_obligatory
@@ -13,6 +14,24 @@ def get_conf_content(path):
 def check_file(file, conf_file):
     return validate_obligatory(file, conf_file['obligatory']) \
            + validate_time(file) + validate_typo(file, conf_file['days'])
+
+
+def get_columns(file):
+    return [column for column, _ in file[0].items()]
+
+
+def get_records_data():
+    conf_file = get_conf_content(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../resources/conf.json')))
+    file_name = conf_file['spreadsheet']
+
+    parser = Parser.Parser(file_name, 'Errors')
+    fetched = parser.fetch_file()
+
+    return {
+        'columns': get_columns(fetched),
+        'invalid': check_file(fetched, conf_file),
+        'all_records': fetched
+    }
 
 
 def main():

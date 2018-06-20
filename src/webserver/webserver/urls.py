@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from displayer import views
+from src.webserver.displayer import views
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
-                  path('', views.index, name='index')
+                  path('', views.index, name='index'),
+                  path('validate/', views.validate, name='validate'),
+                  path('class_schedule/',views.class_schedule, name='class_schedule'),
+                  path('teacher_schedule/',views.teacher_schedule,name='teacher_schedule'),
+                  path('free_classes/',views.free_classes,name='free_classes'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

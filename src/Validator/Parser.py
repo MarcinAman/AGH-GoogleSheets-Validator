@@ -2,6 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import functools
 import platform
+import os
 
 
 def decode_record(record):
@@ -29,7 +30,9 @@ class Parser:
         self.document_len = 0
 
     def authorize(self):
-        creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', self.scope)
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            os.path.abspath(os.path.join(os.path.dirname(__file__), '../../resources/client_secret.json')),
+            self.scope)
 
         return gspread.authorize(creds)
 

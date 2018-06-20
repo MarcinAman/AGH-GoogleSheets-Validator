@@ -1,7 +1,12 @@
+body{
+    font-family: Robot, Arial, sans-serif !important;
+}
+
 #main-bar{
     width: 100%;
     position: absolute;
     height: 5%;
+    max-height: 45px;
     background-color: #0f9d58;
     top: 0;
     left: 0;
@@ -10,7 +15,6 @@
 .main-bar-content{
     display: flex;
     position: relative;
-    font-family: Robot, Arial, sans-serif !important;
     font-size: 20px;
     color: #eee;
     -webkit-font-smoothing: antialiased;
@@ -18,3 +22,35 @@
     padding-top: 0.8%;
     padding-left: 0.8%;
 }
+
+.content{
+    position: relative;
+    color: black;
+    margin: 5% auto;
+    width: 100%;
+    text-align: center;
+}
+
+.content a {
+    padding: 20px;
+}
+
+.main-table{
+    padding-top: 3%
+}
+
+.refresh-container{
+    padding-left: 95.5%;
+    padding-bottom: 1%;
+}
+
+.refresh-container img{
+    width: 64px;
+    height: 64px;
+}
+
+.refresh-container button{
+    background-color: transparent;
+    border: 0;
+}
+
