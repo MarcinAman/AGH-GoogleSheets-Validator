@@ -26,18 +26,21 @@ class TimeValidator:
             if not is_empty_record(class_element):
                 index = (class_element['miejsce'], class_element['dzien'])
 
-                dictionary_element = classrooms.get(index)
+                if index[0] and index[1]:
+                    dictionary_element = classrooms.get(index)
 
-                if dictionary_element is None:
-                    classrooms[index] = \
-                        [zip_begin_with_end(class_element['godz'], class_element['koniec'], class_element)]
-                else:
-                    dictionary_element.append(
-                        zip_begin_with_end(class_element['godz'], class_element['koniec'], class_element))
+                    if dictionary_element is None:
+                        classrooms[index] = \
+                            [zip_begin_with_end(class_element['godz'], class_element['koniec'], class_element)]
+                    else:
+                        dictionary_element.append(
+                            zip_begin_with_end(class_element['godz'], class_element['koniec'], class_element))
 
-                    classrooms[index] = dictionary_element
+                        classrooms[index] = dictionary_element
 
         return classrooms
+
+    #TODO Possible bug where there are more than 3+ classes on 1 slot at only 2 are overlapping
 
     def check_if_classes_overlap(self):
         classes = self.get_classrooms_occupancy()
@@ -46,9 +49,10 @@ class TimeValidator:
 
         for place, day in classes.keys():
             hours_list_with_none = classes[(place, day)]
-            hours_list = [a for a in hours_list_with_none if a[0] is not None]
 
-            hours_list.sort(key=lambda x: x[0])
+            hours_list = sorted(
+                [a for a in hours_list_with_none if a[0] is not None],
+                key=lambda x: x[0])
 
             for index in range(1, len(hours_list)):
                 if is_end_later_than_finish(hours_list[index - 1], hours_list[index]) \
@@ -101,6 +105,17 @@ def zip_begin_with_end(begin_hour, end_hour, class_element):
 
 def is_empty_record(record):
     return record['godz'] == '' and record['koniec'] == ''
+
+
+def get_classrooms_schedule(file):
+    classes = TimeValidator(file)
+
+    occupancy = classes.get_classrooms_occupancy()
+
+    return {
+        str(k) + ' ' + str(v): sorted([x for x in occupancy[k, v] if x[0] is not None], key=lambda x: x[0])
+        for k, v in occupancy
+    }
 
 
 def validate(file):

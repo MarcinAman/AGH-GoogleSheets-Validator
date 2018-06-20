@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from src.webserver.commons import get_records
+from src.webserver.commons import get_records_data, get_classroom_schedule
 from django.template.defaulttags import register
 
 
@@ -8,6 +8,21 @@ from django.template.defaulttags import register
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
+
+
+@register.filter
+def get_keys(k1):
+    return k1.keys()
+
+
+@register.filter
+def get_values(k1):
+    return k1.values()
+
+
+@register.filter
+def sort(content):
+    content.sort()
 
 
 def index(request):
@@ -23,12 +38,13 @@ def index(request):
 
 
 def validate(request):
-    return render(request, 'displayer/validate.html', get_records())
+    return render(request, 'displayer/validate.html', get_records_data())
 
 
 def class_schedule(request):
-    context = {}
-    return render(request, 'displayer/class_schedule.html', context)
+    ctx = {'classrooms': get_classroom_schedule()}
+    print(ctx['classrooms'])
+    return render(request, 'displayer/class_schedule.html', ctx)
 
 
 def teacher_schedule(request):
