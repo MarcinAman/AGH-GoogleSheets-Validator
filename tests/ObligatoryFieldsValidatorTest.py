@@ -1,7 +1,7 @@
 import unittest
 import json
-from src.ObligatoryFieldsValidator import ObligatoryValidator
-from Main import get_conf_content
+from src import ObligatoryValidator
+from src.Validator.Main import get_conf_content
 
 
 def get_setup_object():

@@ -1,8 +1,8 @@
-from src import Parser
+from src.Validator import Parser
 import json
-from src.TypoValidator import validate as validate_typo
-from src.TimeValidator import validate as validate_time
-from src.ObligatoryFieldsValidator import validate as validate_obligatory
+from src.Validator.TypoValidator import validate as validate_typo
+from src.Validator.TimeValidator import validate as validate_time
+from src.Validator.ObligatoryFieldsValidator import validate as validate_obligatory
 
 
 def get_conf_content(path):
@@ -18,10 +18,12 @@ def check_file(file, conf_file):
 def main():
     file_name = 'plan-lato'
     error_file_name = 'Errors'
-    parser = Parser.Parser(file_name,error_file_name)
+    parser = Parser.Parser(file_name, error_file_name)
     fetched = parser.fetch_file()
 
     invalid_elements = check_file(fetched, get_conf_content('./resources/conf.json'))
+
+    print(invalid_elements)
 
     parser.save_to_backup_spreadsheet(
         [fetched.index(x) for x in invalid_elements]

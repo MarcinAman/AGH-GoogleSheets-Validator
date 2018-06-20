@@ -1,0 +1,20 @@
+#main-bar{
+    width: 100%;
+    position: absolute;
+    height: 5%;
+    background-color: #0f9d58;
+    top: 0;
+    left: 0;
+}
+
+.main-bar-content{
+    display: flex;
+    position: relative;
+    font-family: Robot, Arial, sans-serif !important;
+    font-size: 20px;
+    color: #eee;
+    -webkit-font-smoothing: antialiased;
+    -webkit-box-align: center;
+    padding-top: 0.8%;
+    padding-left: 0.8%;
+}

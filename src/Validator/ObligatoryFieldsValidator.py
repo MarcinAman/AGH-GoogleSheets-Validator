@@ -1,5 +1,5 @@
 import functools
-from src.Parser import is_record_empty
+from src.Validator.Parser import is_record_empty
 
 
 def validate(file, fields):
