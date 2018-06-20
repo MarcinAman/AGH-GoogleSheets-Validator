@@ -1,0 +1,5 @@
+
+*.pyc
+*.xml
+client_secret.json
+.idea/AGH-GoogleSheets-Validator.iml

@@ -1,10 +1,14 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import functools
+import platform
 
 
 def decode_record(record):
-    return {k.encode('utf8'): v.encode('utf8') if type(v) == unicode else v for k, v in record.items()}
+    if platform.system() == 'Linux':
+        return {k.encode('utf8'): v.encode('utf8') if type(v) == str else v for k, v in record.items()}
+    else:
+        return record
 
 
 def contains_only_letters(value):
