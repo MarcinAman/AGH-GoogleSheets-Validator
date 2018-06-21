@@ -30,11 +30,38 @@
                 </tr>
             </thead>
              <tbody>
-            {% for inv_element in invalid %}
+            {% for inv_element in invalid_typo %}
             <tr class = "danger">
                 {% for column in columns %}
                 <td>
                    {{inv_element|get_item:column}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+            {% for inv_element in invalid_obligatory %}
+            <tr class = "danger">
+                {% for column in columns %}
+                <td>
+                   {{inv_element|get_item:column}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+            {% for inv in invalid_overlap %}
+            <tr class = "danger">
+                {% for column in columns %}
+                <td>
+                   {{inv.0|get_item:column}}
+                </td>
+                {% endfor %}
+            </tr>
+            <tr class="danger">
+                {%for column in columns %}
+                <td>
+                    {{inv.1|get_item:column}}
                 </td>
                 {% endfor %}
             </tr>

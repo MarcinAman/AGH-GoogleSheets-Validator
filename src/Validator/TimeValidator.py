@@ -26,7 +26,7 @@ class TimeValidator:
             if not is_empty_record(class_element):
                 index = (class_element['miejsce'], class_element['dzien'])
 
-                if index[0] and index[1]:
+                if index[0] and index[1] and is_matched(class_element['godz']):
                     dictionary_element = classrooms.get(index)
 
                     if dictionary_element is None:
@@ -39,8 +39,6 @@ class TimeValidator:
                         classrooms[index] = dictionary_element
 
         return classrooms
-
-    #TODO Possible bug where there are more than 3+ classes on 1 slot at only 2 are overlapping
 
     def check_if_classes_overlap(self):
         classes = self.get_classrooms_occupancy()
@@ -56,9 +54,9 @@ class TimeValidator:
 
             for index in range(1, len(hours_list)):
                 if is_end_later_than_finish(hours_list[index - 1], hours_list[index]) \
-                        and are_in_the_same_week(hours_list[index], hours_list[index - 1]):
+                        and can_overlap(hours_list[index], hours_list[index - 1]):
                     overlapping.append(
-                        (hours_list[index - 1][2], hours_list[index - 1][2])
+                        (hours_list[index - 1][2], hours_list[index][2])
                     )
 
         return overlapping
@@ -70,10 +68,12 @@ def are_the_same(val_a, val_b):
     return len(shared_items) == len(val_a[2].items())
 
 
-def are_in_the_same_week(class_a, class_b):
+def can_overlap(class_a, class_b):
     return class_b[2]['tyg'] == class_a[2]['tyg'] \
-           and class_b[2]['grupa'] == class_a[2]['grupa'] \
-           and class_a[2]['sem'] == class_b[2]['sem']
+           and class_a[2]['sem'] == class_b[2]['sem'] \
+           and class_a[2]['studia'] == class_b[2]['studia'] \
+           and class_a[2]['pora'] == class_b[2]['pora'] \
+           and class_a[2]['wym']+class_b[2]['wym'] > 28
 
 
 def is_end_later_than_finish(a, b):
@@ -112,13 +112,18 @@ def get_classrooms_schedule(file):
 
     occupancy = classes.get_classrooms_occupancy()
 
-    return {
-        str(k) + ' ' + str(v): sorted([x for x in occupancy[k, v] if x[0] is not None], key=lambda x: x[0])
+    return sorted([
+        (str(k) + ' ' + str(v), sorted([x for x in occupancy[k, v] if x[0] is not None], key=lambda x: x[0]))
         for k, v in occupancy
-    }
+    ],key=lambda x: x[0])
+
+
+def validate_time_format(file):
+    validator = TimeValidator(file)
+    return validator.validate_time_format()
 
 
 def validate(file):
     validator = TimeValidator(file)
 
-    return validator.validate_time_format() + validator.check_if_classes_overlap()
+    return validator.check_if_classes_overlap()

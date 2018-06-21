@@ -1,3 +1,6 @@
+import re
+
+
 class TypoValidator:
     def __init__(self, file, days):
         self.file = file
@@ -12,7 +15,7 @@ class TypoValidator:
         return incorrect_objects
 
 
-def validate(file,days):
+def validate(file, days):
     validator = TypoValidator(file, days)
 
     return validator.check_days()

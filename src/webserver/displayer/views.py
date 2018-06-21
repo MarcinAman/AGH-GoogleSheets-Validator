@@ -38,12 +38,12 @@ def index(request):
 
 
 def validate(request):
-    return render(request, 'displayer/validate.html', get_records_data())
+    ctx = get_records_data()
+    return render(request, 'displayer/validate.html', ctx)
 
 
 def class_schedule(request):
     ctx = {'classrooms': get_classroom_schedule()}
-    print(ctx['classrooms'])
     return render(request, 'displayer/class_schedule.html', ctx)
 
 

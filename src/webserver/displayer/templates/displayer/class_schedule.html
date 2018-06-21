@@ -20,15 +20,15 @@
         </div>
     </div>
     <div class="main-table">
-        {% for date in classrooms %}
+        {% for classroom in classrooms %}
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>{{date}}</th>
+                    <th>{{classroom.0}}</th>
                 </tr>
             </thead>
             <tbody>
-                {% for element in classrooms|get_item:date %}
+                {% for element in classroom.1 %}
                 <tr>
                     {% for value in element.2|get_values %}
                         <td>
