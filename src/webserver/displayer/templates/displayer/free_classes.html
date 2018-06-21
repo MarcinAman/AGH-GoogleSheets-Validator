@@ -20,6 +20,30 @@
         </div>
     </div>
 
+    <div class = "main-table">
+        {% for classroom in classrooms %}
+            <table class = "table table-hover">
+                <thead>
+                    <tr>
+                        {{classroom.0}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for start,end in classroom.1 %}
+                        <tr>
+                            <td>
+                                {{start}}
+                            </td>
+                            <td>
+                                {{end}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
+
     <div class="footer navbar-fixed-bottom refresh-container">
         <button onclick="location.reload()">
             {% load static %}

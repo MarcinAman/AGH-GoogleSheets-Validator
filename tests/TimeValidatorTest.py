@@ -1,7 +1,7 @@
 import unittest
 import json
 from src.Validator.TimeValidator import TimeValidator, check_if_format_matches
-from src import decode_record
+from src.Validator.Parser import decode_record
 
 
 def get_setup_object():

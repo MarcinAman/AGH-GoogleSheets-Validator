@@ -1,5 +1,6 @@
 {
   "days": ["Pn","Wt","Sr","Cz","Pt","Sb","Nd"],
   "obligatory": ["studia","sem","pora","przedmiot","typ"],
+  "classes_begining": ["8:00","9:35","11:15","12:50","14:40","16:15","17:50"],
   "spreadsheet": "plan-lato"
 }

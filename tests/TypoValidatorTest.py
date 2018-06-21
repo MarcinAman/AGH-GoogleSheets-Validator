@@ -1,6 +1,6 @@
 import unittest
 import json
-from src import TypoValidator
+from src.Validator import TypoValidator
 from src.Validator.Main import get_conf_content
 
 
@@ -8,7 +8,7 @@ def get_setup_object():
     f = open('sample.json', 'r')
     file_content = json.load(f)['content']
     conf_content = get_conf_content('../resources/conf.json')['days']
-    validator = TypoValidator(file_content, conf_content)
+    validator = TypoValidator.TypoValidator(file_content, conf_content)
 
     return validator
 

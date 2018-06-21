@@ -1,18 +1,7 @@
-days_mapping = {
-    'Pn': 0,
-    'Wt': 1,
-    'Sr': 2,
-    'Cz': 3,
-    'Pt': 4,
-    'Sb': 5,
-    'Nd': 6,
-    '': 7
-}
-
-
 class TeachersParser:
-    def __init__(self, file):
+    def __init__(self, file,days_mapping):
         self.file = file
+        self.days_mapping = days_mapping
 
     def parse_teachers(self):
         teachers = {}
@@ -33,17 +22,17 @@ class TeachersParser:
     def get_teachers_list(self):
         teachers = self.parse_teachers()
 
-        return sort_teachers(teachers)
+        return sort_teachers(teachers,self.days_mapping)
 
 
-def sort_teachers(teachers):
+def sort_teachers(teachers,days_mapping):
     return sorted(
         [(name, sorted(teachers[name], key=lambda x: (days_mapping[x['dzien']], x['godz'])))
          for name in teachers.keys()]
         , key=lambda x: x[0])
 
 
-def get_teachers(file):
-    teachers_parser = TeachersParser(file)
+def get_teachers(file,days_mapping):
+    teachers_parser = TeachersParser(file,days_mapping)
 
     return teachers_parser.get_teachers_list()

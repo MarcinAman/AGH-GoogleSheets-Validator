@@ -4,9 +4,23 @@ import os
 from src.Validator.TypoValidator import validate as validate_typo
 from src.Validator.TimeValidator import validate as validate_time
 from src.Validator.ObligatoryFieldsValidator import validate as validate_obligatory
-from src.Validator.TimeValidator import get_classrooms_schedule as get_parsed_schedule
+from src.Validator.Classrooms import get_classrooms_schedule as get_parsed_schedule
+from src.Validator.Classrooms import generate_free_schedule as get_free
 from src.Validator.TimeValidator import validate_time_format
 from src.Validator.TeachersParser import get_teachers
+
+
+def get_days_mapping():
+    return {
+        'Pn': 0,
+        'Wt': 1,
+        'Sr': 2,
+        'Cz': 3,
+        'Pt': 4,
+        'Sb': 5,
+        'Nd': 6,
+        '': 7
+    }
 
 
 def get_conf_content(path):
@@ -45,12 +59,17 @@ def get_records_data():
 def get_teachers_schedule():
     (fetched, conf_file) = fetch_file()
 
-    return get_teachers(fetched)
+    return get_teachers(fetched,get_days_mapping())
 
 
 def get_classroom_schedule():
     (fetched, conf_file) = fetch_file()
-    return get_parsed_schedule(fetched)
+    return get_parsed_schedule(fetched,get_days_mapping())
+
+
+def get_free_classes():
+    (fetched, conf_file) = fetch_file()
+    return get_free(fetched, conf_file,get_days_mapping())
 
 
 def main():
