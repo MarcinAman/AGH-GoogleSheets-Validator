@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from src.webserver.commons import get_records_data, get_classroom_schedule
+from src.webserver.commons import get_records_data, get_classroom_schedule, get_teachers_schedule
 from django.template.defaulttags import register
 
 
@@ -48,7 +48,7 @@ def class_schedule(request):
 
 
 def teacher_schedule(request):
-    context = {}
+    context = {'teachers': get_teachers_schedule()}
     return render(request, 'displayer/teacher_schedule.html', context)
 
 

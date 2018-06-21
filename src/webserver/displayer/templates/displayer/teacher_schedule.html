@@ -8,6 +8,10 @@
 
     {%load static %}
     <script src="{% static 'scripts/index.js' %}"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div id="main-bar">
@@ -16,8 +20,34 @@
         </div>
     </div>
 
-    <div class = 'content'>
-        teacher_schedule not implemented
+    <div class = "main-table">
+        {% for element in teachers %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        {{element.0}}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for value in element.1 %}
+                    <tr>
+                        {% for rec in value|get_values %}
+                        <td>
+                            {{rec}}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
+
+    <div class="footer navbar-fixed-bottom refresh-container">
+        <button onclick="location.reload()">
+            {% load static %}
+            <img src="{% static 'files/64x64.png' %}">
+        </button>
     </div>
 </body>
 </html>

@@ -6,6 +6,7 @@ from src.Validator.TimeValidator import validate as validate_time
 from src.Validator.ObligatoryFieldsValidator import validate as validate_obligatory
 from src.Validator.TimeValidator import get_classrooms_schedule as get_parsed_schedule
 from src.Validator.TimeValidator import validate_time_format
+from src.Validator.TeachersParser import get_teachers
 
 
 def get_conf_content(path):
@@ -34,11 +35,17 @@ def get_records_data():
     (fetched, conf_file) = fetch_file()
     return {
         'columns': get_columns(fetched),
-        'invalid_typo': validate_typo(fetched, conf_file['days'])+validate_time_format(fetched),
-        'invalid_obligatory':  validate_obligatory(fetched, conf_file['obligatory']),
-        'invalid_overlap' : validate_time(fetched),
+        'invalid_typo': validate_typo(fetched, conf_file['days']) + validate_time_format(fetched),
+        'invalid_obligatory': validate_obligatory(fetched, conf_file['obligatory']),
+        'invalid_overlap': validate_time(fetched),
         'all_records': fetched
     }
+
+
+def get_teachers_schedule():
+    (fetched, conf_file) = fetch_file()
+
+    return get_teachers(fetched)
 
 
 def get_classroom_schedule():
