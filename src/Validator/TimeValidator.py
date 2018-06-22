@@ -24,8 +24,8 @@ class TimeValidator:
 
         overlapping = []
 
-        for place, day in classes.keys():
-            hours_list_with_none = classes[(place, day)]
+        for place, day, sem in classes.keys():
+            hours_list_with_none = classes[(place, day, sem)]
 
             hours_list = sorted(
                 [a for a in hours_list_with_none if a[0] is not None],

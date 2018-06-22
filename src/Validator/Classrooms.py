@@ -7,9 +7,9 @@ def get_classrooms_occupancy(file):
 
     for class_element in file:
         if not is_empty_record(class_element):
-            index = (class_element['miejsce'], class_element['dzien'])
+            index = (class_element['miejsce'], class_element['dzien'], class_element['sem'])
 
-            if index[0] and index[1] and is_matched(class_element['godz']):
+            if index[0] and index[1] and index[2] and is_matched(class_element['godz']):
                 dictionary_element = classrooms.get(index)
 
                 if dictionary_element is None:
@@ -50,13 +50,18 @@ def is_empty_record(record):
     return record['godz'] == '' and record['koniec'] == ''
 
 
-def get_classrooms_schedule(file,days_mapping):
+def get_classrooms_schedule(file, days_mapping):
     occupancy = get_classrooms_occupancy(file)
 
     return sorted([
-        (str(k) + ' ' + str(v), sorted([x for x in occupancy[k, v] if x[0] is not None], key=lambda x: x[0]))
-        for k, v in occupancy
+        (generate_name(k, v, s),
+         sorted([x for x in occupancy[k, v, s] if x[0] is not None], key=lambda x: x[0]))
+        for k, v, s in occupancy
     ], key=lambda x: string_classrooms_comparator(x, days_mapping))
+
+
+def generate_name(k, v, s):
+    return str(k) + ' ' + str(v) + ' ' + str(s)
 
 
 def generate_free_schedule(file, conf, days_mapping):
@@ -74,7 +79,7 @@ def generate_free_schedule(file, conf, days_mapping):
 def string_classrooms_comparator(record, days_mapping):
     splitted = list(record[0].split(' '))
 
-    return splitted[0], splitted[1], days_mapping[splitted[2]]
+    return splitted[0], splitted[1], days_mapping[splitted[2]], splitted[2]
 
 
 def generate_empty_periodic_timetable(classes_begining):
@@ -87,8 +92,8 @@ def generate_empty_periodic_timetable(classes_begining):
 def get_free_classes(occupancy, conf):
     free_schedule = generate_empty_periodic_timetable(conf['classes_begining'])
 
-    for el in occupancy:                    # (start, end,_)
-        for value in free_schedule:         # (start,end)
+    for el in occupancy:  # (start, end,_)
+        for value in free_schedule:  # (start,end)
             if el[0] >= value[0] and el[1] <= value[1]:
                 free_schedule.remove(value)
 
@@ -96,10 +101,11 @@ def get_free_classes(occupancy, conf):
 
 
 def map_dict_to_list(free_schedule):
+    print(free_schedule.keys())
     return [
-        (str(k) + ' ' + str(v),
-         [(map_datetime_to_string(start), map_datetime_to_string(end)) for start, end in free_schedule[k, v]])
-        for k, v in free_schedule.keys()]
+        (generate_name(k, d, s),
+         [(map_datetime_to_string(start), map_datetime_to_string(end)) for start, end in free_schedule[k, d, s]])
+        for k, d, s in free_schedule.keys()]
 
 
 def map_datetime_to_string(element):
