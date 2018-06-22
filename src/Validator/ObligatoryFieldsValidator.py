@@ -9,7 +9,7 @@ def validate(file, fields):
 
 
 def check_if_has_value(record, field):
-    return record[field] != ''
+    return bool(record[field])
 
 
 class ObligatoryValidator:

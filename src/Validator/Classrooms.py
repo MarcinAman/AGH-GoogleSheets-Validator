@@ -7,7 +7,7 @@ def get_classrooms_occupancy(file):
 
     for class_element in file:
         if not is_empty_record(class_element):
-            index = (class_element['miejsce'], class_element['dzien'], class_element['sem'])
+            index = (class_element['miejsce'], class_element['dzien'], class_element['pora'])
 
             if index[0] and index[1] and index[2] and is_matched(class_element['godz']):
                 dictionary_element = classrooms.get(index)
@@ -79,7 +79,7 @@ def generate_free_schedule(file, conf, days_mapping):
 def string_classrooms_comparator(record, days_mapping):
     splitted = list(record[0].split(' '))
 
-    return splitted[0], splitted[1], days_mapping[splitted[2]], splitted[2]
+    return splitted[0], splitted[1], days_mapping[splitted[2]], splitted[2],
 
 
 def generate_empty_periodic_timetable(classes_begining):
@@ -101,7 +101,6 @@ def get_free_classes(occupancy, conf):
 
 
 def map_dict_to_list(free_schedule):
-    print(free_schedule.keys())
     return [
         (generate_name(k, d, s),
          [(map_datetime_to_string(start), map_datetime_to_string(end)) for start, end in free_schedule[k, d, s]])
