@@ -27,7 +27,7 @@ class CheckingValues(unittest.TestCase):
         validator = get_setup_object()
         error_causing_object = {"godz": "7:4b", "wym": 28, "miejsce": "D17 1.38", "pora": "Z", "przedmiot": "Algebra",
                                 "tyg": "",
-                                "obier": "", "dzien": "Wd", "prow": "wms", "osoba": "Przyby\u0142o Jakub", "grupa": "",
+                                "obier": "", "dzien": "Wd", "prow": "wms", "osoba": "Przybyło Jakub", "grupa": "",
                                 "studia": "s1",
                                 "koniec": "9:10", "typ": "W", "sem": 1}
         validator.file.append(error_causing_object)
@@ -43,7 +43,7 @@ class CheckingValues(unittest.TestCase):
 
         error_causing_object = {"godz": "7:40", "wym": 28, "miejsce": "D17 1.38", "pora": "Z", "przedmiot": "Algebra",
                                 "tyg": "",
-                                "obier": "", "dzien": "Wt", "prow": "wms", "osoba": 'Przyby\xc5\x82o Jakub', "grupa": "",
+                                "obier": "", "dzien": "Wt", "prow": "wms", "osoba": 'Przybyło Jakub', "grupa": "",
                                 "studia": "s1",
                                 "koniec": "9:10", "typ": "W", "sem": 1}
         validator.file.append(error_causing_object)

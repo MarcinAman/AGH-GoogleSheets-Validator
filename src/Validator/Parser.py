@@ -13,7 +13,7 @@ def decode_record(record):
 
 
 def contains_only_letters(value):
-    return value[1].isalpha()
+    return str(value[1]).isalpha()
 
 
 def is_record_empty(record):

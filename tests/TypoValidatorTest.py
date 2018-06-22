@@ -19,13 +19,15 @@ class CheckingValues(unittest.TestCase):
         validator = get_setup_object()
         self.assertEqual([], validator.check_days())
         validator.file.append({"dzien": ""})
-        self.assertEqual([],validator.check_days())
+        self.assertEqual([], validator.check_days())
 
     def test_validate_with_error(self):
         validator = get_setup_object()
-        error_causing_object = {"godz": "7:40", "wym": 28, "miejsce": "D17 1.38", "pora": "Z", "przedmiot": "Algebra", "tyg": "",
-             "obier": "", "dzien": "Wd", "prow": "wms", "osoba": "Przyby\u0142o Jakub", "grupa": "", "studia": "s1",
-             "koniec": "9:10", "typ": "W", "sem": 1}
+        error_causing_object = {"godz": "7:40", "wym": 28, "miejsce": "D17 1.38", "pora": "Z", "przedmiot": "Algebra",
+                                "tyg": "",
+                                "obier": "", "dzien": "Wd", "prow": "wms", "osoba": "Przyby\u0142o Jakub", "grupa": "",
+                                "studia": "s1",
+                                "koniec": "9:10", "typ": "W", "sem": 1}
         validator.file.append(error_causing_object)
         self.assertEqual([error_causing_object], validator.check_days())
 
